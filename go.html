@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Redirecting…</title>
+<style>
+  body{font-family:-apple-system,Segoe UI,Roboto,sans-serif;display:flex;align-items:center;justify-content:center;
+       height:100vh;margin:0;color:#333;text-align:center;padding:20px;}
+  a{color:#3d6b4f;}
+</style>
+</head>
+<body>
+<div>
+  <p>Taking you to the right place…</p>
+  <noscript>
+    <p>Choose where to go:</p>
+    <p>
+      <a href="https://apps.apple.com/app/idXXXXXXXXX">iOS App Store</a> &nbsp;·&nbsp;
+      <a href="https://play.google.com/store/apps/details?id=com.example.app">Google Play</a> &nbsp;·&nbsp;
+      <a href="https://example.com">Website</a>
+    </p>
+  </noscript>
+</div>
+<script>
+  var ua = navigator.userAgent || navigator.vendor || window.opera || "";
+
+  // ---- Edit these three lines with your real links ----
+  var iosUrl = "https://apps.apple.com/app/idXXXXXXXXX";
+  var androidUrl = "https://play.google.com/store/apps/details?id=com.example.app";
+  var fallbackUrl = "https://example.com";
+  // -------------------------------------------------------
+
+  var dest = fallbackUrl;
+  if (/iPad|iPhone|iPod/.test(ua) && !window.MSStream) {
+    dest = iosUrl || fallbackUrl;
+  } else if (/android/i.test(ua)) {
+    dest = androidUrl || fallbackUrl;
+  }
+  if (dest) window.location.replace(dest);
+</script>
+</body>
+</html>
