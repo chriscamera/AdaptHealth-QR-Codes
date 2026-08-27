@@ -9,35 +9,37 @@
        height:100vh;margin:0;color:#333;text-align:center;padding:20px;}
   a{color:#3d6b4f;}
 </style>
+
 </head>
 <body>
 <div>
   <p>Taking you to the right place…</p>
-  <noscript>
-    <p>Choose where to go:</p>
-    <p>
-      <a href="https://apps.apple.com/app/idXXXXXXXXX">iOS App Store</a> &nbsp;·&nbsp;
-      <a href="https://play.google.com/store/apps/details?id=com.example.app">Google Play</a> &nbsp;·&nbsp;
-      <a href="https://example.com">Website</a>
-    </p>
-  </noscript>
+  <noscript><p>Please enable JavaScript to continue, or check the link with whoever shared it with you.</p></noscript>
 </div>
 <script>
-  var ua = navigator.userAgent || navigator.vendor || window.opera || "";
-
-  // ---- Edit these three lines with your real links ----
-  var iosUrl = "https://apps.apple.com/app/idXXXXXXXXX";
-  var androidUrl = "https://play.google.com/store/apps/details?id=com.example.app";
-  var fallbackUrl = "https://example.com";
-  // -------------------------------------------------------
-
-  var dest = fallbackUrl;
-  if (/iPad|iPhone|iPod/.test(ua) && !window.MSStream) {
-    dest = iosUrl || fallbackUrl;
-  } else if (/android/i.test(ua)) {
-    dest = androidUrl || fallbackUrl;
+(function(){
+  function qp(name){
+    var m = new RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
+    return m ? decodeURIComponent(m[1].replace(/\+/g, ' ')) : '';
   }
-  if (dest) window.location.replace(dest);
+  var fallback = qp('u');
+  var iosUrl = qp('i') || fallback;
+  var androidUrl = qp('a') || fallback;
+  var code = qp('c') || '(untagged)';
+  window.__qrCode = code;
+
+  var ua = navigator.userAgent || navigator.vendor || window.opera || "";
+  var dest = fallback;
+  if (/iPad|iPhone|iPod/.test(ua) && !window.MSStream) dest = iosUrl;
+  else if (/android/i.test(ua)) dest = androidUrl;
+
+  if (window.dataLayer) window.dataLayer.push({ event: 'qr_scan', qr_code: code });
+  
+
+  if (dest){
+    setTimeout(function(){ window.location.replace(dest); }, 150);
+  }
+})();
 </script>
 </body>
 </html>
